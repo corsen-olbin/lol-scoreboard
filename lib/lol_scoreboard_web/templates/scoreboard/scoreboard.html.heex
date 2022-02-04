@@ -1,0 +1,73 @@
+<div class="container flex justify-center mx-auto px-10">
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <div class="grid grid-cols-1 gap-y-1 w-fit">
+      <%= for player <- team_order(@scores["allPlayers"]) do %>
+        <div class="grid grid-cols-11 gap-x-px w-fit">
+          <div class="flex  justify-center items-center">
+            <div class="peer w-14 h-14"><img src={champ_square_img(player["rawChampionName"])}></div>
+            <div class="opacity-0 flex  items-center hover:opacity-100 duration-10 w-14 h-14 absolute">
+              <div class="bg-gray-500 absolute text-white" >
+              <%= player["championName"] %>
+              </div>
+            </div>
+          </div>
+          <div class="w-14 h-14 flex justify-center items-center"><span><%= player["scores"]["creepScore"] %></span></div>
+          <div class="w-14 h-14 flex justify-center items-center"><%= player_kda(player["scores"]) %></div>
+          <%= for item_num <- 0..5 do %>
+            <%= if Enum.at(player["items"], item_num) == nil or Enum.at(player["items"], item_num)["slot"] == 6 do %>
+              <div class="w-14 h-14 border-2 border-sky-500"></div>
+            <% else %>
+              <div class="flex justify-center items-center w-14 h-14 border-2 border-sky-500">
+                <img src={item_square_img( Enum.at(player["items"], item_num)["itemID"])}>
+              </div>
+            <% end %>
+          <% end %>
+          <%= if Enum.any?(player["items"], fn i -> i["slot"] == 6 end) do %>
+            <div class="flex justify-center items-center w-14 h-14 border-2 border-sky-500">
+              <img src={item_square_img( Enum.find(player["items"], fn i -> i["slot"] == 6 end)["itemID"])}>
+            </div>
+          <% else %>
+            <div class="w-14 h-14 border-2 border-sky-500"></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <div class="grid grid-cols-1 gap-y-1 w-fit">
+      <%= for player <- team_chaos(@scores["allPlayers"]) do %>
+        <div class="grid grid-cols-11  gap-x-px w-fit">
+          <div class="flex  justify-center items-center">
+            <div class="peer w-14 h-14"><img src={champ_square_img(player["rawChampionName"])}></div>
+            <div class="opacity-0 flex  items-center hover:opacity-100 duration-10 w-14 h-14 absolute">
+              <div class="bg-gray-500 absolute text-white" >
+              <%= player["championName"] %>
+              </div>
+            </div>
+            </div>
+          <div class="w-14 h-14 flex justify-center items-center"><span><%= player["scores"]["creepScore"] %></span></div>
+          <div class="w-14 h-14 flex justify-center items-center"><%= player_kda(player["scores"]) %></div>
+          <%= for item_num <- 0..5 do %>
+            <%= if Enum.at(player["items"], item_num) == nil or Enum.at(player["items"], item_num)["slot"] == 6 do %>
+              <div class="w-14 h-14 border-2 border-sky-500"></div>
+            <% else %>
+              <div class="flex justify-center items-center w-14 h-14 border-2 border-sky-500">
+                <img src={item_square_img( Enum.at(player["items"], item_num)["itemID"])}>
+              </div>
+            <% end %>
+          <% end %>
+          <%= if Enum.any?(player["items"], fn i -> i["slot"] == 6 end) do %>
+            <div class="flex justify-center items-center w-14 h-14 border-2 border-sky-500">
+              <img src={item_square_img( Enum.find(player["items"], fn i -> i["slot"] == 6 end)["itemID"])}>
+            </div>
+          <% else %>
+            <div class="w-14 h-14 border-2 border-sky-500"></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>
+<span>Updated Time: <%= time() %></span>
